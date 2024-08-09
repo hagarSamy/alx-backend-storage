@@ -3,10 +3,10 @@ DELIMITER $$
 
 CREATE PROCEDURE ComputeAverageScoreForUser(user_id int)
 BEGIN
-    DECLARE av_score float;
+    DECLARE av_score int;
     SELECT AVG(score) INTO av_score
     FROM corrections
-    WHERE user_id = user_id; 
+    WHERE corrections.user_id = user_id; 
     UPDATE users
     SET average_score = av_score
     WHERE id = user_id;
