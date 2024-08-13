@@ -13,5 +13,6 @@ def update_topics(mongo_collection, name, topics):
     :param topics: The list of topics to set in the document'''
     mongo_collection.update_one(
         {"name": name},
-        { "$set": {"topics": topics}}
+        { "$set": {"topics": topics}},
+        {"multi": "true"}
     )
