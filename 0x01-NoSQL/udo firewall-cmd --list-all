@@ -1,0 +1,11 @@
+[0;1;31m●[0m mongod.service - MongoDB Database Server
+     Loaded: loaded (/lib/systemd/system/mongod.service; enabled; vendor preset: enabled)
+     Active: [0;1;31mfailed[0m (Result: exit-code) since Tue 2024-08-13 14:21:24 +03; 27min ago
+       Docs: https://docs.mongodb.org/manual
+    Process: 13254 ExecStart=/usr/bin/mongod --config /etc/mongod.conf [0;1;31m(code=exited, status=1/FAILURE)[0m
+   Main PID: 13254 (code=exited, status=1/FAILURE)
+
+Aug 13 14:21:24 hagar-pc systemd[1]: Started MongoDB Database Server.
+Aug 13 14:21:24 hagar-pc mongod[13254]: 2024-08-13T14:21:24.393+0300 F  CONTROL  [main] Failed global initialization: FileNotOpen: Failed to open "/var/log/mongodb/mongod.log"
+Aug 13 14:21:24 hagar-pc systemd[1]: [0;1;39m[0;1;31m[0;1;39mmongod.service: Main process exited, code=exited, status=1/FAILURE[0m
+Aug 13 14:21:24 hagar-pc systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mmongod.service: Failed with result 'exit-code'.[0m
