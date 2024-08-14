@@ -11,7 +11,7 @@ def update_topics(mongo_collection, name, topics):
     :param mongo_collection: The MongoDB collection to update. pymongo 
     :param name: The name of the school document to update.
     :param topics: The list of topics to set in the document'''
-    mongo_collection.update_one(
+    mongo_collection.update_many(
         {"name": name},
         { "$set": {"topics": topics}}
     )
