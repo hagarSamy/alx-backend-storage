@@ -10,6 +10,17 @@ stores the input data in Redis using the random key and return the key.
 import redis
 import uuid
 from typing import Union, Callable, Any
+import functools
+
+
+def count_calls(method: Callable) -> Callable:
+    qualname = method.__qualname__
+
+    @functools.wraps(method)  # This preserves the original method's metadata
+    def wrapper(self, *args, **kwargs):
+        self._redis.incr(qualname)
+        return method(self, *args, **kwargs)
+    return wrapper
 
 
 class Cache:
@@ -19,6 +30,7 @@ class Cache:
         # resetting the db
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         '''generate a random key
         store the input data in Redis
@@ -27,7 +39,7 @@ class Cache:
         self._redis.set(rand_key, data)
         return rand_key
 
-    def get(self, key: str, 
+    def get(self, key: str,
             fn: Callable = None) -> Union[str, bytes, int, float]:
         '''get data converted back to the desired format using the
         optional Callable'''
@@ -43,7 +55,7 @@ class Cache:
             return str(data)
         except:
             return data
-            
+
     def get_int(self, data: Any) -> int:
         '''convert data to integer'''
         try:
