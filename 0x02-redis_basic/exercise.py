@@ -31,6 +31,8 @@ class Cache:
         '''get data converted back to the desired format using the
         optional Callable'''
         data = self._redis.get(key)
+        if data is None:
+            return None
         if fn:
             try:
                 converted_data = fn(data)
