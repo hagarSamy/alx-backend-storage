@@ -11,19 +11,19 @@ if __name__ == "__main__":
     print('Methods:')
 
     get_logs = nginx_collection.count_documents({"method": "GET"})
-    print(f'\t method GET: {get_logs}')
+    print(f'\tmethod GET: {get_logs}')
 
     POST_logs = nginx_collection.count_documents({"method": "POST"})
-    print(f'\t method POST: {POST_logs}')
+    print(f'\tmethod POST: {POST_logs}')
 
     PUT_logs = nginx_collection.count_documents({"method": "PUT"})
-    print(f'\t method PUT: {PUT_logs}')
+    print(f'\tmethod PUT: {PUT_logs}')
 
     PATCH_logs = nginx_collection.count_documents({"method": "PATCH"})
-    print(f'\t method PATCH: {PATCH_logs}')
+    print(f'\tmethod PATCH: {PATCH_logs}')
 
     DELETE_logs = nginx_collection.count_documents({"method": "DELETE"})
-    print(f'\t method DELETE: {DELETE_logs}')
+    print(f'\tmethod DELETE: {DELETE_logs}')
 
     status_checks = nginx_collection.count_documents({"method": "GET", "path": "/status"})
     print(f'{status_checks} status check')
