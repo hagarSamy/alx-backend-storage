@@ -9,13 +9,13 @@ stores the input data in Redis using the random key and return the key.
 
 import redis
 import uuid
-from typing import Union, Any
+from typing import Union, Callable, Any
 
 
 class Cache:
     '''store an instance of the Redis client'''
     def __init__(self):
-        self._redis = redis.Redis(host="localhost", port=6379, db=0)
+        self._redis = redis.Redis()
         # resetting the db
         self._redis.flushdb()
 
@@ -27,18 +27,14 @@ class Cache:
         self._redis.set(rand_key, data)
         return rand_key
 
-    def get(self, key: str, fn: callable) -> Union[str, int]:
+    def get(self, key: str, 
+            fn: Callable = None) -> Union[str, bytes, int, float]:
         '''get data converted back to the desired format using the
         optional Callable'''
         data = self._redis.get(key)
-        if data is None:
-            return None
         if fn:
-            try:
-                converted_data = fn(data)
-                return converted_data
-            except:
-                return data
+            converted_data = fn(data)
+            return converted_data
         return data
 
     def get_str(self, data: Any) -> str:
@@ -48,7 +44,7 @@ class Cache:
         except:
             return data
             
-    def get_int(self, data) -> int:
+    def get_int(self, data: Any) -> int:
         '''convert data to integer'''
         try:
             return int(data)
