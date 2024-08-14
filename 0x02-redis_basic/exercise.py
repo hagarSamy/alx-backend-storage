@@ -27,7 +27,7 @@ class Cache:
         self._redis.set(rand_key, data)
         return rand_key
 
-    def get_data(self, key: str, fn: callable) -> Union[str, int]:
+    def get(self, key: str, fn: callable) -> Union[str, int]:
         '''get data converted back to the desired format using the
         optional Callable'''
         data = self._redis.get(key)
