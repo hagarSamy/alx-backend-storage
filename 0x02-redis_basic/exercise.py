@@ -9,7 +9,7 @@ stores the input data in Redis using the random key and return the key.
 
 import redis
 import uuid
-from typing import Union
+from typing import Union, Any
 
 
 class Cache:
@@ -26,3 +26,29 @@ class Cache:
         rand_key = str(uuid.uuid4())
         self._redis.set(rand_key, data)
         return rand_key
+
+    def get_data(self, key: str, fn: callable) -> Union[str, int]:
+        '''get data converted back to the desired format using the
+        optional Callable'''
+        data = self._redis.get(key)
+        if fn:
+            try:
+                converted_data = fn(data)
+                return converted_data
+            except:
+                return data
+        return data
+
+    def get_str(self, data: Any) -> str:
+        '''convert data to string'''
+        try:
+            return str(data)
+        except:
+            return data
+            
+    def get_int(self, data) -> int:
+        '''convert data to integer'''
+        try:
+            return int(data)
+        except:
+            return data
