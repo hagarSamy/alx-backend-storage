@@ -49,9 +49,8 @@ def replay(self, method):
     inputs = self._redis.lrange(input_key, 0, -1)
     outputs = self._redis.lrange(output_key, 0, -1)
 
-    for i, input_val in enumerate(inputs):
-        output_val = outputs[i]
-        print(f"{qualname}(*{input_val.decode('utf-8')} -> {output_val}")
+    for input, output in zip(inputs, outputs):
+        print(f"{qualname}(*{input.decode('utf-8')} -> {output.decode('utf-8')}")
     
 
 class Cache:
