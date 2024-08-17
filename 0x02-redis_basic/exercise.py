@@ -9,8 +9,9 @@ stores the input data in Redis using the random key and return the key.
 
 import redis
 import uuid
-from typing import Union, Callable, Any
+from typing import Union, Callable, Any, Optional
 import functools
+
 
 
 def count_calls(method: Callable) -> Callable:
@@ -63,7 +64,7 @@ class Cache:
         return rand_key
 
     def get(self, key: str,
-            fn: Callable = None) -> Union[str, bytes, int, float]:
+            fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
         '''get data converted back to the desired format using the
         optional Callable'''
         data = self._redis.get(key)
@@ -72,16 +73,10 @@ class Cache:
             return converted_data
         return data
 
-    def get_str(self, data: Any) -> str:
+    def get_str(self, key: str) -> str:
         '''convert data to string'''
-        try:
-            return str(data)
-        except:
-            return data
+        return self.get(key=key, fn=lambda x: x.decode("utf-8"))
 
-    def get_int(self, data: Any) -> int:
+    def get_int(self, key: str) -> int:
         '''convert data to integer'''
-        try:
-            return int(data)
-        except:
-            return data
+        return self.get(key=key, fn=lambda x: int(x.decode("utf-8")))
