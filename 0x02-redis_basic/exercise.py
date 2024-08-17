@@ -51,7 +51,7 @@ def replay(self, method):
 
     for i, input_val in enumerate(inputs):
         output_val = outputs[i].decode('utf-8')
-        print(f"{qualname}(*({input_val},)) -> {output_val}")
+        print(f"{qualname}(*{input_val.decode('utf-8')}) -> {output_val}")
     
 
 class Cache:
