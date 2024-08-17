@@ -50,8 +50,8 @@ def replay(self, method):
     outputs = self._redis.lrange(output_key, 0, -1)
 
     for i, input_val in enumerate(inputs):
-        output_val = outputs[i].decode('utf-8')
-        print(f"{qualname}(*{input_val.decode('utf-8')}) -> {output_val}")
+        output_val = outputs[i]
+        print(f"{qualname}(*{input_val.decode('utf-8')} -> {output_val}")
     
 
 class Cache:
