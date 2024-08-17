@@ -46,6 +46,14 @@ def replay(self, method):
     count = self.get(qualname).decode("utf-8")
     print(f"{qualname} was called {count} times:")
 
+    inputs = self._redis.lrange(input_key, 0, -1)
+    outputs = self._redis.lrange(output_key, 0, -1)
+
+    for i, input_val in enumerate(inputs):
+        output_val = outputs[i].decode('utf-8')
+        print(f"{qualname}(*({input_val},)) -> {output_val}")
+    
+
 class Cache:
     '''store an instance of the Redis client'''
     def __init__(self):
