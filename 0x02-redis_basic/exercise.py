@@ -38,9 +38,9 @@ def call_history(method: Callable) -> Callable:
         return output
     return wrapper
 
-def replay(self, method: Callable) -> None:
+def replay(self, fn: Callable) -> None:
     '''display the history of calls of a particular function.'''
-    qualname = method.__qualname__
+    qualname = fn.__qualname__
     input_key = qualname + ":inputs"
     output_key = qualname + ":outputs"
     count = self.get(qualname).decode("utf-8")
